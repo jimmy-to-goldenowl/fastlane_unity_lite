@@ -1,0 +1,56 @@
+
+name: Build Unity
+on:
+  workflow_dispatch:
+    inputs:
+        lane:
+          description: 'Fastlane lane to use (beta OR firebase OR production)'
+          required: true
+          default: 'firebase'
+          #  ${{ github.event.inputs.lane || 'beta' }}
+ 
+
+jobs:
+  buildAndTestForSomePlatforms:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion:
+          - 2019.4.27f1
+        targetPlatform:
+          - iOS # Build an iOS player.
+          - Android # Build an Android player.
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Cache
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library
+
+      # Test
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v2
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: WebGL
+
+      # Output
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: build
