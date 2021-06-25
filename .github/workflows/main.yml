@@ -33,7 +33,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: Library
-          key: Library
+          key: Library-${{ matrix.targetPlatform }}
 
       # # Test
       # - name: Run tests
