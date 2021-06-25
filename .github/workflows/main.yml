@@ -35,12 +35,13 @@ jobs:
           path: Library
           key: Library
 
-      # # Test
-      # - name: Run tests
-      #   uses: game-ci/unity-test-runner@v2
-      #   with:
-            # UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      #     unityVersion: ${{ matrix.unityVersion }}
+      # Test
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
 
       # Build
       - name: Build project
@@ -54,8 +55,8 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           # buildMethod: EditorNamespace.BuilderClassName.StaticBuildMethod
 
-      # # Output
-      # - uses: actions/upload-artifact@v2
-      #   with:
-      #     name: Build
-      #     path: build
+      # Output
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: build
