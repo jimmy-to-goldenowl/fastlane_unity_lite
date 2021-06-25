@@ -1,13 +1,7 @@
 
 name: Build Unity
 on:
-  workflow_dispatch:
-    inputs:
-        lane:
-          description: 'Fastlane lane to use (beta OR firebase OR production)'
-          required: true
-          default: 'firebase'
-          #  ${{ github.event.inputs.lane || 'beta' }}
+  workflow_dispatch: {}
  
 
 jobs:
