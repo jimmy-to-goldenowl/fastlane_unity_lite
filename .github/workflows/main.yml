@@ -29,13 +29,13 @@ jobs:
           path: Library
           key: Library
 
-      # Test
-      - name: Run tests
-        uses: game-ci/unity-test-runner@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          unityVersion: ${{ matrix.unityVersion }}
+      # # Test
+      # - name: Run tests
+      #   uses: game-ci/unity-test-runner@v2
+      #   env:
+      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      #   with:
+      #     unityVersion: ${{ matrix.unityVersion }}
 
       # Build
       - name: Build project
