@@ -50,6 +50,7 @@ jobs:
         with:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
+          # buildMethod: EditorNamespace.BuilderClassName.StaticBuildMethod
 
       # # Output
       # - uses: actions/upload-artifact@v2
