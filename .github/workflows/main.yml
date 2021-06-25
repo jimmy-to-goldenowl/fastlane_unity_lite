@@ -39,11 +39,8 @@ jobs:
       # - name: Run tests
       #   uses: game-ci/unity-test-runner@v2
       #   with:
+            # UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       #     unityVersion: ${{ matrix.unityVersion }}
-      - name: Request manual activation file
-        id: getManualLicenseFile
-        uses: game-ci/unity-request-activation-file@v2
-
 
       # Build
       - name: Build project
