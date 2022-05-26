@@ -14,7 +14,7 @@ jobs:
         unityVersion:
           - 2020.3.34f1
         targetPlatform:
-          - iOS # Build an iOS player.
+#           - iOS # Build an iOS player.
           - Android # Build an Android player.
     steps:
       # Checkout
@@ -29,10 +29,10 @@ jobs:
           path: Library
           key: Library
 
-      - name: setup-android-tools
-        uses: maxim-lobanov/setup-android-tools@v1
-        with:
-          packages: ndk;19.2.5345600
+#       - name: setup-android-tools
+#         uses: maxim-lobanov/setup-android-tools@v1
+#         with:
+#           packages: ndk;19.0.5232133
         
       # # Test
       # - name: Run tests
@@ -53,7 +53,11 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           # buildMethod: EditorNamespace.BuilderClassName.StaticBuildMethod
-
+      - run: ls /home
+      - run: ls /home/runner
+      - run: ls /home/runner/work/
+      - run: ls /home/runner/Unity
+      - run: ls /home/runner/Unity/Hub/Editor/${{ matrix.unityVersion }}/PlaybackEngines/AndroidPlayer/NDK
       # Output
       - uses: actions/upload-artifact@v2
         with:
