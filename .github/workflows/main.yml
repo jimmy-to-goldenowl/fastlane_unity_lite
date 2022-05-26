@@ -28,11 +28,19 @@ jobs:
         with:
           path: Library
           key: Library
-
-#       - name: setup-android-tools
-#         uses: maxim-lobanov/setup-android-tools@v1
-#         with:
-#           packages: ndk;19.0.5232133
+      
+      #--- Setup NDK ---
+      # Output steps.setup-ndk.outputs.ndk-path
+      - name: Setup NDK r19
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r19b
+          add-to-path: true
+      - name: Check NDK version
+        run: |
+          ls ${{ steps.setup-ndk.outputs.ndk-path }}
+          cat ${{ steps.setup-ndk.outputs.ndk-path }}/source.properties
         
       # # Test
       # - name: Run tests
@@ -54,29 +62,8 @@ jobs:
 #           targetPlatform: ${{ matrix.targetPlatform }}
           # buildMethod: EditorNamespace.BuilderClassName.StaticBuildMethod
           
-      - id: unity-validate
-        name: Unity Editor Validation
-        uses: xrtk/unity-validate@main
-        with:
-          version-file-path: 'ProjectSettings/ProjectVersion.txt'
-
-#       - uses: xrtk/unity-action@main
-#         name: Project Validation
-#         with:
-#           name: 'Project-Validation'
-#           editor-path: '${{ steps.unity-validate.outputs.editor-path }}'
-#           project-path: '${{ steps.unity-validate.outputs.project-path }}'
-#           args: '-quit -batchmode -executeMethod UnityEditor.SyncVS.SyncSolution'
-          
-      - run: ls /home
-      - run: ls /home/runner
-      - run: ls /home/runner/work/
-      - run: ls ${{ steps.unity-validate.outputs.editor-path }}
-      - run: ls /home/runner/Unity
-      - run: ls /home/runner/Unity/Hub/Editor/${{ matrix.unityVersion }}
-      - run: ls /home/runner/Unity/Hub/Editor/${{ matrix.unityVersion }}/PlaybackEngines/AndroidPlayer/NDK
 #       Output
-      - uses: actions/upload-artifact@v2
-        with:
-          name: ndk
-          path: /home/runner/Unity/Hub/Editor/${{ matrix.unityVersion }}/PlaybackEngines/AndroidPlayer/NDK
+#       - uses: actions/upload-artifact@v2
+#         with:
+#           name: Build
+#           path: Build
