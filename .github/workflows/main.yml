@@ -29,6 +29,11 @@ jobs:
           path: Library
           key: Library
 
+      - name: setup-android-tools
+        uses: maxim-lobanov/setup-android-tools@v1
+        with:
+          packages: ndk;19.0.5232133
+        
       # # Test
       # - name: Run tests
       #   uses: game-ci/unity-test-runner@v2
