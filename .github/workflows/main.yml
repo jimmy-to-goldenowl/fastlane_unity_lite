@@ -32,7 +32,7 @@ jobs:
       - name: setup-android-tools
         uses: maxim-lobanov/setup-android-tools@v1
         with:
-          packages: ndk;19.0.5232133
+          packages: ndk;19.2.5345600
         
       # # Test
       # - name: Run tests
