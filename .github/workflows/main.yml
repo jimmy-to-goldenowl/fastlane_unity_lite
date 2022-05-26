@@ -42,24 +42,40 @@ jobs:
       #   with:
       #     unityVersion: ${{ matrix.unityVersion }}
 
-      # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v2
-        env:
-          # UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          # UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          unityVersion: ${{ matrix.unityVersion }}
-          targetPlatform: ${{ matrix.targetPlatform }}
+#       # Build
+#       - name: Build project
+#         uses: game-ci/unity-builder@v2
+#         env:
+#           # UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+#           # UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+#           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+#         with:
+#           unityVersion: ${{ matrix.unityVersion }}
+#           targetPlatform: ${{ matrix.targetPlatform }}
           # buildMethod: EditorNamespace.BuilderClassName.StaticBuildMethod
+          
+      - id: unity-validate
+        name: Unity Editor Validation
+        uses: xrtk/unity-validate@main
+        with:
+          version-file-path: 'ProjectSettings/ProjectVersion.txt'
+
+      - uses: xrtk/unity-action@main
+        name: Project Validation
+        with:
+          name: 'Project-Validation'
+          editor-path: '${{ steps.unity-validate.outputs.editor-path }}'
+          project-path: '${{ steps.unity-validate.outputs.project-path }}'
+          args: '-quit -batchmode -executeMethod UnityEditor.SyncVS.SyncSolution'
+          
       - run: ls /home
       - run: ls /home/runner
       - run: ls /home/runner/work/
+      - run: ls ${{ steps.unity-validate.outputs.editor-path }}
       - run: ls /home/runner/Unity
       - run: ls /home/runner/Unity/Hub/Editor/${{ matrix.unityVersion }}/PlaybackEngines/AndroidPlayer/NDK
       # Output
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Build
-          path: build
+#       - uses: actions/upload-artifact@v2
+#         with:
+#           name: Build
+#           path: build
