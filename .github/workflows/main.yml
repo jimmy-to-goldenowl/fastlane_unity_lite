@@ -1,4 +1,3 @@
-
 name: Build Unity
 on:
   workflow_dispatch: {}
@@ -14,7 +13,7 @@ jobs:
         unityVersion:
           - 2020.3.34f1
         targetPlatform:
-#           - iOS # Build an iOS player.
+          - iOS # Build an iOS player.
           - Android # Build an Android player.
     steps:
       # Checkout
@@ -28,20 +27,7 @@ jobs:
         with:
           path: Library
           key: Library
-      
-      #--- Setup NDK ---
-      # Output steps.setup-ndk.outputs.ndk-path
-      - name: Setup NDK r19
-        uses: nttld/setup-ndk@v1
-        id: setup-ndk
-        with:
-          ndk-version: r19b
-          add-to-path: true
-      - name: Check NDK version
-        run: |
-          ls ${{ steps.setup-ndk.outputs.ndk-path }}
-          cat ${{ steps.setup-ndk.outputs.ndk-path }}/source.properties
-        
+
       # # Test
       # - name: Run tests
       #   uses: game-ci/unity-test-runner@v2
@@ -50,20 +36,20 @@ jobs:
       #   with:
       #     unityVersion: ${{ matrix.unityVersion }}
 
-#       # Build
-#       - name: Build project
-#         uses: game-ci/unity-builder@v2
-#         env:
-#           # UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-#           # UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-#           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-#         with:
-#           unityVersion: ${{ matrix.unityVersion }}
-#           targetPlatform: ${{ matrix.targetPlatform }}
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          # UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          # UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
+          targetPlatform: ${{ matrix.targetPlatform }}
           # buildMethod: EditorNamespace.BuilderClassName.StaticBuildMethod
-          
-#       Output
-#       - uses: actions/upload-artifact@v2
-#         with:
-#           name: Build
-#           path: Build
+
+      # Output
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: build
